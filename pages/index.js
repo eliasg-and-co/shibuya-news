@@ -465,8 +465,9 @@ export default function Home() {
         .switch-edition { background: none; border: none; color: var(--ink-dim); font-family: var(--mono); font-size: 0.68rem; cursor: pointer; }
 
         /* RSVP */
-        .rsvp-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
-        .rsvp-modal { background: #111; border: 1px solid var(--border-hi); border-radius: 16px; padding: 28px 24px; width: 100%; max-width: 380px; display: flex; flex-direction: column; gap: 20px; }
+        .rsvp-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100vw; height: 100dvh; background: rgba(0,0,0,0.92); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px; -webkit-overflow-scrolling: touch; }
+        .rsvp-modal { background: #111; border: 1px solid var(--border-hi); border-radius: 16px; padding: 32px 28px; width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 24px; }
+        .rsvp-word { font-family: var(--serif); font-size: 2.4rem; display: flex; align-items: baseline; letter-spacing: 0.01em; }
         .rsvp-header { display: flex; justify-content: space-between; align-items: center; }
         .rsvp-label { font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); }
         .rsvp-close { background: none; border: none; color: var(--ink-dim); font-size: 1.3rem; cursor: pointer; }
