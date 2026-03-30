@@ -5,20 +5,72 @@ const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const parser = new Parser({ timeout: 8000, headers: { "User-Agent": "Shibuya-News/1.0" } });
 
 const FEEDS = [
-  // Music industry
+  // Music industry trades
   { name: "Music Ally", url: "https://musically.com/feed/", category: "music-industry" },
   { name: "Billboard", url: "https://www.billboard.com/feed/", category: "music-industry" },
-  { name: "Pitchfork", url: "https://pitchfork.com/rss/news/feed.json", category: "music-culture" },
+  { name: "Music Business Worldwide", url: "https://www.musicbusinessworldwide.com/feed/", category: "music-industry" },
+  { name: "Hypebot", url: "https://www.hypebot.com/feed/atom.xml", category: "music-industry" },
   { name: "Hits Daily Double", url: "https://www.hitsdailydouble.com/rss", category: "music-industry" },
+  { name: "Music Week", url: "https://www.musicweek.com/rss", category: "music-industry" },
+  { name: "Digital Music News", url: "https://www.digitalmusicnews.com/feed/", category: "music-industry" },
+  { name: "Music Radar", url: "https://www.musicradar.com/feeds/all", category: "music-industry" },
+  { name: "Complete Music Update", url: "https://completemusicupdate.com/feed/", category: "music-industry" },
+  { name: "Music Inc Magazine", url: "https://www.musicincmag.com/feed/", category: "music-industry" },
+
+  // Music culture
+  { name: "Pitchfork", url: "https://pitchfork.com/rss/news/feed.json", category: "music-culture" },
+  { name: "Resident Advisor", url: "https://ra.co/xml/news.xml", category: "music-culture" },
+  { name: "Fact Magazine", url: "https://www.factmag.com/feed/", category: "music-culture" },
+  { name: "The Wire", url: "https://www.thewire.co.uk/rss", category: "music-culture" },
+  { name: "Mixmag", url: "https://mixmag.net/feed", category: "music-culture" },
+  { name: "BrooklynVegan", url: "https://brooklynvegan.com/feed/", category: "music-culture" },
+  { name: "NME", url: "https://www.nme.com/feed", category: "music-culture" },
+  { name: "Gorilla vs Bear", url: "https://www.gorillavsbear.net/feed/", category: "music-culture" },
+  { name: "Stereogum", url: "https://www.stereogum.com/feed/", category: "music-culture" },
+  { name: "Consequence", url: "https://consequence.net/feed/", category: "music-culture" },
+
   // Substack thought leaders
   { name: "The Honest Broker", url: "https://www.honest-broker.com/feed", category: "substack" },
   { name: "Water & Music", url: "https://www.waterandmusic.com/feed", category: "substack" },
   { name: "Chris Dalla Riva", url: "https://www.chrisdallariva.com/feed", category: "substack" },
+  { name: "Leveling Up", url: "https://alderbrook.substack.com/feed", category: "substack" },
+  { name: "Music Tectonics", url: "https://musictectonics.substack.com/feed", category: "substack" },
+  { name: "The Ankler", url: "https://theankler.com/feed", category: "substack" },
+  { name: "Like & Subscribe", url: "https://likeandsubscribenews.substack.com/feed", category: "substack" },
+
   // Tech
   { name: "TechCrunch", url: "https://techcrunch.com/feed/", category: "tech" },
   { name: "The Verge", url: "https://www.theverge.com/rss/index.xml", category: "tech" },
-  // VC / startup
-  { name: "Axios Pro Media", url: "https://www.axios.com/feeds/feed.rss", category: "vc-startup" },
+  { name: "Wired", url: "https://www.wired.com/feed/rss", category: "tech" },
+  { name: "MIT Tech Review", url: "https://www.technologyreview.com/topnews.rss", category: "tech" },
+  { name: "Ars Technica", url: "https://feeds.arstechnica.com/arstechnica/index", category: "tech" },
+  { name: "Create Digital Music", url: "https://cdm.link/feed/", category: "tech" },
+  { name: "Synthtopia", url: "https://www.synthtopia.com/feed/", category: "tech" },
+
+  // Gaming / interactive
+  { name: "Gamasutra", url: "https://www.gamedeveloper.com/rss.xml", category: "gaming" },
+  { name: "Polygon", url: "https://www.polygon.com/rss/index.xml", category: "gaming" },
+  { name: "Kotaku", url: "https://kotaku.com/feed/rss", category: "gaming" },
+  { name: "Game Developer", url: "https://www.gamedeveloper.com/rss.xml", category: "gaming" },
+
+  // VC / startup / business
+  { name: "Axios", url: "https://www.axios.com/feeds/feed.rss", category: "vc-startup" },
+  { name: "The Information", url: "https://www.theinformation.com/feed", category: "vc-startup" },
+  { name: "Semafor Media", url: "https://www.semafor.com/rss/media.xml", category: "vc-startup" },
+  { name: "StrictlyVC", url: "https://strictlyvc.com/feed/", category: "vc-startup" },
+  { name: "Crunchbase News", url: "https://news.crunchbase.com/feed/", category: "vc-startup" },
+  { name: "TechCrunch Startups", url: "https://techcrunch.com/category/startups/feed/", category: "vc-startup" },
+
+  // AI / future of culture
+  { name: "AI Business", url: "https://aibusiness.com/rss.xml", category: "ai" },
+  { name: "Import AI", url: "https://importai.substack.com/feed", category: "ai" },
+  { name: "The Rundown AI", url: "https://therundownai.com/feed/", category: "ai" },
+
+  // Creator economy
+  { name: "ICYMI", url: "https://icymimarketing.substack.com/feed", category: "creator" },
+  { name: "Means of Creation", url: "https://li.substack.com/feed", category: "creator" },
+  { name: "Sound on Sound", url: "https://www.soundonsound.com/feed", category: "music-production" },
+  { name: "Attack Magazine", url: "https://www.attackmagazine.com/feed/", category: "music-production" },
 ];
 
 const MUSIC_KEYWORDS = [
