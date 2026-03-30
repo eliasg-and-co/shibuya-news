@@ -456,8 +456,7 @@ export default function Home() {
         .action-btn.active { border-color: var(--accent); color: var(--accent); }
         .action-btn:active { border-color: var(--border-hi); color: var(--ink); }
 
-        .story-title { font-family: var(--serif); font-size: 1.05rem; font-style: italic; line-height: 1.3; margin-bottom: 10px; color: var(--ink); letter-spacing: -0.01em; }
-        .story-synopsis { font-size: 0.78rem; line-height: 1.7; color: var(--ink-mid); margin-bottom: 12px; }
+        .story-title { font-family: var(--serif); font-size: 1.05rem; font-style: normal;        .story-synopsis { font-size: 0.78rem; line-height: 1.7; color: var(--ink-mid); margin-bottom: 12px; }
         .story-implication { padding: 12px; background: var(--surface); border-radius: 6px; border-left: 2px solid var(--accent); }
         .implication-label { font-size: 0.52rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); opacity: 0.75; display: block; margin-bottom: 5px; }
         .implication-text { font-size: 0.76rem; line-height: 1.65; color: var(--ink-mid); font-style: italic; }
