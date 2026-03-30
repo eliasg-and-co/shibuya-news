@@ -42,8 +42,10 @@ const TOD_CONFIG = {
 };
 
 const PUBLICATIONS = [
-  "Music Ally", "Billboard", "Pitchfork", "Hits Daily Double",
-  "Water & Music", "The Honest Broker", "TechCrunch", "The Verge", "Axios",
+  "Music Ally", "Billboard", "Pitchfork", "Hits Daily Double", "Water & Music",
+  "The Honest Broker", "TechCrunch", "The Verge", "Axios", "Variety", "Rolling Stone",
+  "Consequence", "NME", "The Guardian Music", "Hypebot", "Music Business Worldwide",
+  "Resident Advisor", "DJ Mag", "FACT Magazine", "Wired", "The Information",
 ];
 
 // ── RSS Ticker: free rss2json.com proxy, no API key needed for public feeds ──
@@ -404,20 +406,24 @@ export default function PulsePage() {
           {/* LANDING */}
           {view === "landing" && (
             <div className="landing">
-              <div className="landing-date">{dateStr}</div>
-              <div className="landing-heading">
-                <h1>{cfg.heading}<br /><em>{cfg.emphasis}</em></h1>
-                <p className="landing-sub">{cfg.subhead}</p>
+              <div className="landing-top">
+                <div className="landing-date">{dateStr}</div>
+                <div className="landing-heading">
+                  <h1>{cfg.heading}<br /><em>{cfg.emphasis}</em></h1>
+                  <p className="landing-sub">{cfg.subhead}</p>
+                </div>
+                <div className="sources-strip">
+                  <span className="sources-label">pulling from</span>
+                  <span className="sources-list">
+                    {PUBLICATIONS.join(" · ")} + more
+                  </span>
+                </div>
               </div>
-              <div className="sources-strip">
-                <span className="sources-label">pulling from</span>
-                <span className="sources-list">
-                  {PUBLICATIONS.join(" · ")} + more
-                </span>
+              <div className="landing-cta">
+                <button className="generate-btn" onClick={fetchNews}>
+                  {cfg.button}
+                </button>
               </div>
-              <button className="generate-btn" onClick={fetchNews}>
-                {cfg.button}
-              </button>
             </div>
           )}
 
@@ -591,7 +597,16 @@ export default function PulsePage() {
         main { flex: 1; padding: 0 20px 40px; }
 
         /* ── Landing ── */
-        .landing { padding-top: 40px; }
+        .landing {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          min-height: calc(100dvh - 84px); /* full height minus header + ticker */
+          padding-top: 40px;
+          padding-bottom: 32px;
+        }
+        .landing-top { display: flex; flex-direction: column; gap: 0; }
+        .landing-cta { padding-top: 24px; }
         .landing-date {
           font-size: 0.6rem;
           letter-spacing: 0.16em;
@@ -618,7 +633,7 @@ export default function PulsePage() {
         }
 
         .sources-strip {
-          margin-bottom: 32px;
+          margin-bottom: 0;
           padding: 16px 0;
           border-top: 1px solid var(--border);
           border-bottom: 1px solid var(--border);
